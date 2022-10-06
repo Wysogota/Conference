@@ -4,9 +4,11 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/routes/conference.php';
 
 define('API', '/api');
 
-// header('Content-type: json/application');
+header('Content-Type: application/json');
 
 function apiRequests($router)
 {
-  conferenceRequests($router);
+  $db = require_once $_SERVER['DOCUMENT_ROOT'] . '/Database/Database.php';
+  
+  conferenceRequests($router, $db);
 }

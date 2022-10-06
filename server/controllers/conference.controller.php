@@ -1,11 +1,13 @@
 <?php
 
-function getConferenceById($router)
+function getConferenceById($router, $db)
 {
-  return $router->conferenceId;
+  $conference = $db->query("SELECT * FROM conferences WHERE id=$router->conferenceId;");
+  return json_encode($conference);
 }
 
-function getConferences($router)
+function getConferences($router, $db)
 {
-  return 'All conferences';
+  $conferences = $db->query('SELECT * FROM conferences;');
+  return json_encode($conferences);
 }
