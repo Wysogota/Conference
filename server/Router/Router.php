@@ -43,7 +43,7 @@ class Router
     $param_keys = $values[0];
     $param_values = array();
 
-    for ($i = 0; $i < count($param_keys); $i++) {
+    for ($i = 0; $i < count($this->request->params); $i++) {
       $param_values[$i] = $this->request->params[substr($param_keys[$i], 1)];
     }
 
