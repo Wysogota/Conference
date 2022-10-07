@@ -24,6 +24,7 @@ CREATE TABLE countries(
 
 CREATE TABLE conferences(
   id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
   event_date DATETIME NOT NULL,
   coord_id INTEGER REFERENCES coord(id),
   country_id INTEGER NOT NULL REFERENCES countries(id),
@@ -48,6 +49,6 @@ INSERT INTO coords (lat, lng) VALUES
 INSERT INTO countries (name, coord_id) VALUES
  ('Ukraine', 1);
 
-INSERT INTO conferences (event_date, coord_id, country_id) VALUES 
-(CURRENT_TIMESTAMP, 2, 1),
-(CURRENT_TIMESTAMP, 3, 1);
+INSERT INTO conferences (name, event_date, coord_id, country_id) VALUES 
+('Conference1', NOW() + INTERVAL 5 DAY, 2, 1),
+('Conference2', NOW() + INTERVAL 10 DAY, 3, 1);
