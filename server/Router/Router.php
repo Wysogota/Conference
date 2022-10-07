@@ -21,29 +21,9 @@ class Router
       $this->invalidMethodHandler();
     }
 
-    $this->getParams($route);
+    $this->request->getParams($route);
 
     $this->{strtolower($name)}[$this->formatRoute($route)] = $method;
-  }
-
-
-  private function getParams($route)
-  {
-    preg_match_all('/:[^\/]*/', $route, $values);
-
-    $param_keys = $values[0];
-    array_walk($param_keys, function (&$item) {
-      $item = substr($item, 1);
-    });
-
-    $path = str_replace(implode('/', $values[0]), '', $route);
-    $param_values = array_values(array_filter(explode('/', str_replace($path, '', $_SERVER['REQUEST_URI']))));
-
-    if (count($param_keys) === count($param_values)) {
-      for ($i = 0; $i < count($param_keys); $i++) {
-        $this->{$param_keys[$i]} = $param_values[$i];
-      }
-    }
   }
 
   /**
@@ -62,7 +42,7 @@ class Router
     $param_values = array();
 
     for ($i = 0; $i < count($param_keys); $i++) {
-      $param_values[$i] = $this->{substr($param_keys[$i], 1)};
+      $param_values[$i] = $this->request->params[substr($param_keys[$i], 1)];
     }
 
     if (count($param_keys) === count($param_values)) {

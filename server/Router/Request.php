@@ -3,6 +3,8 @@ require_once 'IRequest.php';
 
 class Request implements IRequest
 {
+  public $params = array();
+
   function __construct()
   {
     $this->bootstrapSelf();
@@ -40,6 +42,25 @@ class Request implements IRequest
           $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
         }
         return $body;
+    }
+  }
+
+  public function getParams($route)
+  {
+    preg_match_all('/:[^\/]*/', $route, $values);
+
+    $param_keys = $values[0];
+    array_walk($param_keys, function (&$item) {
+      $item = substr($item, 1);
+    });
+
+    $path = str_replace(implode('/', $values[0]), '', $route);
+    $param_values = array_values(array_filter(explode('/', str_replace($path, '', $_SERVER['REQUEST_URI']))));
+
+    if (count($param_keys) === count($param_values)) {
+      for ($i = 0; $i < count($param_keys); $i++) {
+        $this->params[$param_keys[$i]] = $param_values[$i];
+      }
     }
   }
 }
