@@ -5,6 +5,7 @@ function getConferenceById($request)
 {
   $conferenceId = $request->params['conferenceId'];
   $conference = Conference::findOneById($conferenceId);
+  http_response_code(200);
   return json_encode($conference);
 }
 
@@ -14,20 +15,12 @@ function getConferences($request)
   return json_encode($conferences);
 }
 
-function createConference($request, $db)
+function createConference($request)
 {
-  // $body = $router->getBody();
+  $body = $request->getBody();
 
-  // $date = $body['event_date'];
-  // $coord_id = $body['coord_id'];
-  // $country_id = $body['country_id'];
+  $conference = Conference::create($body, true);
 
-  // print_r($body);
-
-  return json_encode($request->getBody());
-
-
-
-  // $conference = $db->execute("INSERT INTO conferences (event_date, coord_id, country_id) VALUES ($date, $coord_id, $country_id);");
-  // return json_encode($conference);
+  http_response_code(201);
+  return json_encode($conference);
 }

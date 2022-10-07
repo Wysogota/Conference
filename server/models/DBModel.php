@@ -42,4 +42,24 @@ class DBModel
 
     return $result;
   }
+
+  public static function create($body, $returning = false)
+  {
+    $db = require_once DB_PATH;
+    $table = static::$table_name;
+
+    $fields = implode(',', array_keys($body));
+    $mappedValues = array_map(fn ($value) => "\"$value\"", array_values($body));
+    $values = implode(',', $mappedValues);
+
+    $sql = "INSERT INTO $table ($fields) VALUES ($values);";
+    $lastId = $db->execute($sql);
+
+    if ($returning) {
+      $response = $db->query("SELECT * FROM $table WHERE id=$lastId;");
+      $conference = new static($response[0]);
+
+      return $conference;
+    }
+  }
 }

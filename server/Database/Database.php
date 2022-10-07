@@ -19,7 +19,7 @@ class Database
       $charset = $config['charset'];
 
       $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset;";
-      
+
       $conn = new PDO($dsn, $config['username'], $config['password']);
       $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $this->link = $conn;
@@ -31,7 +31,8 @@ class Database
   public function execute($sql)
   {
     $sth = $this->link->prepare($sql);
-    return $sth->execute();
+    $sth->execute();
+    return $this->link->lastInsertId();
   }
 
   public function query($sql)

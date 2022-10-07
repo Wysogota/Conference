@@ -37,10 +37,8 @@ class Request implements IRequest
       case 'GET':
         return;
       case 'POST':
-        $body = array();
-        foreach ($_POST as $key => $value) {
-          $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
-        }
+        $data = file_get_contents('php://input');
+        $body = json_decode($data, true);
         return $body;
     }
   }

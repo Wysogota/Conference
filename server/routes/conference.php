@@ -14,7 +14,6 @@ function conferenceRequests($router)
   });
 
   $router->post($path, function ($request) {
-    return json_encode($request->getBody());
-    // return createConference($request, $db);
+    return createConference($request);
   });
 }
