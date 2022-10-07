@@ -1,27 +1,17 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/conference.controller.php';
+require_once APP_DIR . '/controllers/conference.controller.php';
 
 function conferenceRequests($router)
 {
-  $path = API . '/conference';
+  $PATH = API . '/conference';
 
-  $router->get($path, function ($request) {
-    return getConferences($request);
-  });
+  $router->get($PATH, fn ($request) => getConferences($request));
 
-  $router->get("$path/:conferenceId", function ($request) {
-    return getConferenceById($request);
-  });
+  $router->get("$PATH/:conferenceId", fn ($request) => getConferenceById($request));
 
-  $router->post($path, function ($request) {
-    return createConference($request);
-  });
+  $router->post($PATH, fn ($request) => createConference($request));
 
-  $router->patch("$path/:conferenceId", function ($request) {
-    return updateConference($request);
-  });
+  $router->patch("$PATH/:conferenceId", fn ($request) => updateConference($request));
 
-  $router->delete("$path/:conferenceId", function ($request) {
-    return deleteConference($request);
-  });
+  $router->delete("$PATH/:conferenceId", fn ($request) => deleteConference($request));
 }

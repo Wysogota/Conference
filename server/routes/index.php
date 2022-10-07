@@ -1,6 +1,5 @@
 <?php
-
-require_once $_SERVER['DOCUMENT_ROOT'] . '/routes/conference.php';
+require_once APP_DIR . '/routes/conference.php';
 
 define('API', '/api');
 

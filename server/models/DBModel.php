@@ -57,9 +57,7 @@ class DBModel
 
     if ($returning) {
       $response = $db->query("SELECT * FROM $table WHERE id=$lastId;");
-      $conference = new static($response[0]);
-
-      return $conference;
+      return new static($response[0]);
     }
   }
 
@@ -79,9 +77,7 @@ class DBModel
 
     if ($returning) {
       $response = $db->query("SELECT * FROM $table WHERE id=$id;");
-      $conference = new static($response[0]);
-
-      return $conference;
+      return new static($response[0]);
     }
   }
 
@@ -92,14 +88,13 @@ class DBModel
 
     if ($returning) {
       $response = $db->query("SELECT * FROM $table WHERE id=$id;");
-      $conference = new static($response[0]);
     }
 
     $sql = "DELETE FROM $table WHERE id=$id;";
     $db->execute($sql);
 
     if ($returning) {
-      return $conference;
+      return new static($response[0]);
     }
   }
 }

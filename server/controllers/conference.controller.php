@@ -28,9 +28,7 @@ function updateConference($request)
 {
   $conferenceId = $request->params['conferenceId'];
   $body = $request->getBody();
-
   $conference = Conference::updateById($conferenceId, $body, true);
-
   http_response_code(200);
   return json_encode($conference);
 }
@@ -38,9 +36,7 @@ function updateConference($request)
 function deleteConference($request)
 {
   $conferenceId = $request->params['conferenceId'];
-
   $conference = Conference::deleteById($conferenceId, true);
-
   http_response_code(200);
   return json_encode($conference);
 }
