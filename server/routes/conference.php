@@ -1,19 +1,19 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/conference.controller.php';
 
-function conferenceRequests($router, $db)
+function conferenceRequests($router)
 {
   $path = API . '/conference';
 
-  $router->get($path, function ($request) use ($db) {
-    return getConferences($request, $db);
+  $router->get($path, function ($request) {
+    return getConferences($request);
   });
 
-  $router->get("$path/:conferenceId", function ($request) use ($db) {
-    return getConferenceById($request, $db);
+  $router->get("$path/:conferenceId", function ($request) {
+    return getConferenceById($request);
   });
 
-  $router->post($path, function ($request) use ($db) {
+  $router->post($path, function ($request) {
     return json_encode($request->getBody());
     // return createConference($request, $db);
   });

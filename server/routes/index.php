@@ -8,7 +8,5 @@ header('Content-Type: application/json');
 
 function apiRequests($router)
 {
-  $db = require_once $_SERVER['DOCUMENT_ROOT'] . '/Database/Database.php';
-  
-  conferenceRequests($router, $db);
+  conferenceRequests($router);
 }

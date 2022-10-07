@@ -1,15 +1,16 @@
 <?php
+require_once APP_DIR . '/models/Conference.php';
 
-function getConferenceById($request, $db)
+function getConferenceById($request)
 {
   $conferenceId = $request->params['conferenceId'];
-  $conference = $db->query("SELECT * FROM conferences WHERE id=$conferenceId;");
+  $conference = Conference::findOneById($conferenceId);
   return json_encode($conference);
 }
 
-function getConferences($request, $db)
+function getConferences($request)
 {
-  $conferences = $db->query('SELECT * FROM conferences;');
+  $conferences = Conference::findAll();
   return json_encode($conferences);
 }
 
