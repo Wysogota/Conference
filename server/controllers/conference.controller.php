@@ -34,3 +34,13 @@ function updateConference($request)
   http_response_code(200);
   return json_encode($conference);
 }
+
+function deleteConference($request)
+{
+  $conferenceId = $request->params['conferenceId'];
+
+  $conference = Conference::deleteById($conferenceId, true);
+
+  http_response_code(200);
+  return json_encode($conference);
+}

@@ -20,4 +20,8 @@ function conferenceRequests($router)
   $router->patch("$path/:conferenceId", function ($request) {
     return updateConference($request);
   });
+
+  $router->delete("$path/:conferenceId", function ($request) {
+    return deleteConference($request);
+  });
 }

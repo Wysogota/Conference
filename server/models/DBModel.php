@@ -84,4 +84,22 @@ class DBModel
       return $conference;
     }
   }
+
+  public static function deleteById($id, $returning = false)
+  {
+    $db = require_once DB_PATH;
+    $table = static::$table_name;
+
+    if ($returning) {
+      $response = $db->query("SELECT * FROM $table WHERE id=$id;");
+      $conference = new static($response[0]);
+    }
+
+    $sql = "DELETE FROM $table WHERE id=$id;";
+    $db->execute($sql);
+
+    if ($returning) {
+      return $conference;
+    }
+  }
 }
