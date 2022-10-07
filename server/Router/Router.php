@@ -6,6 +6,8 @@ class Router
   private $supportedHttpMethods = array(
     'GET',
     'POST',
+    'PATCH',
+    'DELETE',
   );
 
   function __construct(IRequest $request)

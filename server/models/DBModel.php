@@ -62,4 +62,26 @@ class DBModel
       return $conference;
     }
   }
+
+  public static function updateById($id, $body, $returning = false)
+  {
+    $db = require_once DB_PATH;
+    $table = static::$table_name;
+
+    $updateArr = array();
+    foreach ($body as $key => $value) {
+      array_push($updateArr, "$key=\"$value\"");
+    }
+    $updateValues = implode(',', $updateArr);
+
+    $sql = "UPDATE $table SET $updateValues WHERE id=$id;";
+    $db->execute($sql);
+
+    if ($returning) {
+      $response = $db->query("SELECT * FROM $table WHERE id=$id;");
+      $conference = new static($response[0]);
+
+      return $conference;
+    }
+  }
 }

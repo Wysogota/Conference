@@ -12,15 +12,25 @@ function getConferenceById($request)
 function getConferences($request)
 {
   $conferences = Conference::findAll();
+  http_response_code(200);
   return json_encode($conferences);
 }
 
 function createConference($request)
 {
   $body = $request->getBody();
-
   $conference = Conference::create($body, true);
-
   http_response_code(201);
+  return json_encode($conference);
+}
+
+function updateConference($request)
+{
+  $conferenceId = $request->params['conferenceId'];
+  $body = $request->getBody();
+
+  $conference = Conference::updateById($conferenceId, $body, true);
+
+  http_response_code(200);
   return json_encode($conference);
 }

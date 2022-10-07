@@ -16,4 +16,8 @@ function conferenceRequests($router)
   $router->post($path, function ($request) {
     return createConference($request);
   });
+
+  $router->patch("$path/:conferenceId", function ($request) {
+    return updateConference($request);
+  });
 }
