@@ -1,5 +1,4 @@
 <?php
-
 class Database
 {
   private $link;
@@ -12,7 +11,7 @@ class Database
   private function connect()
   {
     try {
-      $config = require_once 'config.php';
+      $config = require 'config.php';
 
       $host = $config['host'];
       $dbname = $config['db_name'];
@@ -30,9 +29,13 @@ class Database
 
   public function execute($sql)
   {
-    $sth = $this->link->prepare($sql);
-    $sth->execute();
-    return $this->link->lastInsertId();
+    try {
+      $sth = $this->link->prepare($sql);
+      $sth->execute();
+      return $this->link->lastInsertId();
+    } catch (PDOException $e) {
+      echo 'Prepare failed.' . $e->getMessage();
+    }
   }
 
   public function query($sql)
@@ -48,5 +51,3 @@ class Database
     return $result;
   }
 }
-
-return new Database();

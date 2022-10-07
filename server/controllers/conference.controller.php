@@ -1,5 +1,6 @@
 <?php
 require_once APP_DIR . '/models/Conference.php';
+require_once APP_DIR . '/models/Coords.php';
 
 function getConferenceById($request)
 {
@@ -28,7 +29,18 @@ function createConference($request)
 {
   try {
     $body = $request->getBody();
-    $conference = Conference::create($body, true);
+
+    $coordsBody = ['lat' => $body['lat'], 'lng' => $body['lng']];
+    $coordId = Coords::create($coordsBody);
+
+    $conferenceBody = [
+      'name' => $body['name'],
+      'event_date' => $body['event_date'],
+      'coord_id' => $coordId,
+      'country_id' => $body['country_id'],
+    ];
+    $conference = Conference::create($conferenceBody, true);
+    
     http_response_code(201);
     return json_encode($conference);
   } catch (PDOException $e) {

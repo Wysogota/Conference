@@ -1,5 +1,6 @@
 <?php
 define('DB_PATH', APP_DIR . '/Database/Database.php');
+require_once DB_PATH;
 
 class DBModel
 {
@@ -15,9 +16,14 @@ class DBModel
     }
   }
 
+  protected static function db()
+  {
+    return new Database();
+  }
+
   public static function findOneById($id)
   {
-    $db = require_once DB_PATH;
+    $db = static::db();
     $table = static::$table_name;
 
     $response = $db->query("SELECT * FROM $table WHERE id=$id;");
@@ -31,7 +37,7 @@ class DBModel
   public static function findAll()
   {
     $result = array();
-    $db = require_once DB_PATH;
+    $db = static::db();
     $table = static::$table_name;
 
     $response = $db->query("SELECT * FROM $table;");
@@ -43,9 +49,11 @@ class DBModel
     return $result;
   }
 
+
+
   public static function create($body, $returning = false)
   {
-    $db = require_once DB_PATH;
+    $db = static::db();
     $table = static::$table_name;
 
     $fields = implode(',', array_keys($body));
@@ -59,11 +67,13 @@ class DBModel
       $response = $db->query("SELECT * FROM $table WHERE id=$lastId;");
       return new static($response[0]);
     }
+
+    return $lastId;
   }
 
   public static function updateById($id, $body, $returning = false)
   {
-    $db = require_once DB_PATH;
+    $db = static::db();
     $table = static::$table_name;
 
     $updateArr = array();
@@ -83,7 +93,7 @@ class DBModel
 
   public static function deleteById($id, $returning = false)
   {
-    $db = require_once DB_PATH;
+    $db = static::db();
     $table = static::$table_name;
 
     if ($returning) {
