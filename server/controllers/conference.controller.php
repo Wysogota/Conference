@@ -6,9 +6,22 @@ function getConferenceById($request)
 {
   try {
     $conferenceId = $request->params['conferenceId'];
+
     $conference = Conference::findOneById($conferenceId);
+    $coord = Coord::findOneById($conference->coord_id);
+
+    $result = [
+      "id" => $conference->id,
+      "name" => $conference->name,
+      "event_date" => $conference->event_date,
+      "coord_id" => $conference->coord_id,
+      "lat" => $coord->lat,
+      "lng" => $coord->lng,
+      "country_id" => $conference->country_id,
+    ];
+
     http_response_code(200);
-    return json_encode(['data' => $conference]);
+    return json_encode(['data' => $result]);
   } catch (PDOException $e) {
     return json_encode(['error' => $e->getMessage()]);
   }
