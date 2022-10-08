@@ -8,7 +8,7 @@ function getConferenceById($request)
     $conferenceId = $request->params['conferenceId'];
     $conference = Conference::findOneById($conferenceId);
     http_response_code(200);
-    return json_encode($conference);
+    return json_encode(['data' => $conference]);
   } catch (PDOException $e) {
     return json_encode(['error' => $e->getMessage()]);
   }
@@ -19,7 +19,7 @@ function getConferences($request)
   try {
     $conferences = Conference::findAll();
     http_response_code(200);
-    return json_encode($conferences);
+    return json_encode(['data' => $conferences]);
   } catch (PDOException $e) {
     return json_encode(['error' => $e->getMessage()]);
   }
@@ -52,7 +52,7 @@ function createConference($request)
     ];
 
     http_response_code(201);
-    return json_encode($result);
+    return json_encode(['data' => $result]);
   } catch (PDOException $e) {
     return json_encode(['error' => $e->getMessage()]);
   }
@@ -85,7 +85,7 @@ function updateConference($request)
     ];
 
     http_response_code(200);
-    return json_encode($result);
+    return json_encode(['data' => $result]);
   } catch (PDOException $e) {
     return json_encode(['error' => $e->getMessage()]);
   }
@@ -109,7 +109,7 @@ function deleteConference($request)
     ];
 
     http_response_code(200);
-    return json_encode($result);
+    return json_encode(['data' => $result]);
   } catch (PDOException $e) {
     return json_encode(['error' => $e->getMessage()]);
   }
