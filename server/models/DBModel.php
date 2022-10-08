@@ -1,6 +1,5 @@
 <?php
-define('DB_PATH', APP_DIR . '/Database/Database.php');
-require_once DB_PATH;
+require_once APP_DIR . '/Database/Database.php';
 
 class DBModel
 {
@@ -48,8 +47,6 @@ class DBModel
 
     return $result;
   }
-
-
 
   public static function create($body, $returning = false)
   {
