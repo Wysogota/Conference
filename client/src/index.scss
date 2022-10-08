@@ -1,0 +1,7 @@
+@import './common/styles/colors';
+
+body {
+  background-color: $bg_color;
+  color: $color;
+  font-family: 'Courier New', monospace;
+}
