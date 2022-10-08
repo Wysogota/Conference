@@ -41,17 +41,22 @@ class Router
     preg_match_all('/:[^\/]*/', $route, $values);
     $param_keys = $values[0];
     $param_values = array();
+    $params = &$this->request->params;
 
-    for ($i = 0; $i < count($this->request->params); $i++) {
-      $param_values[$i] = $this->request->params[substr($param_keys[$i], 1)];
-    }
+    if ($param_keys) {
+      for ($i = 0; $i < count($params); $i++) {
+        $paramName = substr($param_keys[$i], 1);
+        if (array_key_exists($paramName, $params)) {
+          $param_values[$i] = $params[$paramName];
+        }
+      }
 
-    if (count($param_keys) === count($param_values)) {
-      for ($i = 0; $i < count($param_keys); $i++) {
-        $result = str_replace($param_keys[$i], $param_values[$i], $result);
+      if (count($param_keys) === count($param_values)) {
+        for ($i = 0; $i < count($param_keys); $i++) {
+          $result = str_replace($param_keys[$i], $param_values[$i], $result);
+        }
       }
     }
-
     return $result;
   }
 
