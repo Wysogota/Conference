@@ -1,0 +1,17 @@
+@import '../../../common/styles/functions';
+@import '../../../common/styles/colors';
+
+$card-height: 220px;
+
+.card {
+  height: $card-height;
+  border: none !important;
+
+  position: relative;
+
+  background-color: $item_bg_color !important;
+}
+
+.title {
+  @extend %text-overflow;
+}
