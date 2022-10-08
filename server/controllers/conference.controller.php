@@ -1,6 +1,6 @@
 <?php
 require_once APP_DIR . '/models/Conference.php';
-require_once APP_DIR . '/models/Coords.php';
+require_once APP_DIR . '/models/Coord.php';
 
 function getConferenceById($request)
 {
@@ -30,13 +30,13 @@ function createConference($request)
   try {
     $body = $request->getBody();
 
-    $coordsBody = ['lat' => $body['lat'], 'lng' => $body['lng']];
-    $coords = Coords::create($coordsBody, true);
+    $coordBody = ['lat' => $body['lat'], 'lng' => $body['lng']];
+    $coord = Coord::create($coordBody, true);
 
     $conferenceBody = [
       'name' => $body['name'],
       'event_date' => $body['event_date'],
-      'coord_id' => $coords->id,
+      'coord_id' => $coord->id,
       'country_id' => $body['country_id'],
     ];
     $conference = Conference::create($conferenceBody, true);
@@ -46,8 +46,8 @@ function createConference($request)
       "name" => $conference->name,
       "event_date" => $conference->event_date,
       "coord_id" => $conference->coord_id,
-      "lat" => $coords->lat,
-      "lng" => $coords->lng,
+      "lat" => $coord->lat,
+      "lng" => $coord->lng,
       "country_id" => $conference->country_id,
     ];
 
@@ -64,8 +64,8 @@ function updateConference($request)
     $conferenceId = $request->params['conferenceId'];
     $body = $request->getBody();
 
-    $coordsBody = ['lat' => $body['lat'], 'lng' => $body['lng']];
-    $coords = Coords::updateById($body['coord_id'], $coordsBody, true);
+    $coordBody = ['lat' => $body['lat'], 'lng' => $body['lng']];
+    $coord = Coord::updateById($body['coord_id'], $coordBody, true);
 
     $conferenceBody = [
       'name' => $body['name'],
@@ -79,8 +79,8 @@ function updateConference($request)
       "name" => $conference->name,
       "event_date" => $conference->event_date,
       "coord_id" => $conference->coord_id,
-      "lat" => $coords->lat,
-      "lng" => $coords->lng,
+      "lat" => $coord->lat,
+      "lng" => $coord->lng,
       "country_id" => $conference->country_id,
     ];
 
@@ -97,14 +97,14 @@ function deleteConference($request)
     $conferenceId = $request->params['conferenceId'];
 
     $conference = Conference::deleteById($conferenceId, true);
-    $coords = Coords::deleteById($conference->coord_id, true);
+    $coord = Coord::deleteById($conference->coord_id, true);
 
     $result = [
       "id" => $conference->id,
       "name" => $conference->name,
       "event_date" => $conference->event_date,
-      "lat" => $coords->lat,
-      "lng" => $coords->lng,
+      "lat" => $coord->lat,
+      "lng" => $coord->lng,
       "country_id" => $conference->country_id,
     ];
 

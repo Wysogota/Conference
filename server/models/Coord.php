@@ -1,7 +1,7 @@
 <?php
 require_once 'DBModel.php';
 
-class Coords extends DBModel
+class Coord extends DBModel
 {
   protected static $table_name = 'coords';
 
