@@ -8,6 +8,4 @@ class Country extends DBModel
   public $id;
   public $name;
   public $coord_id;
-  public $created_at;
-  public $updated_at;
 }

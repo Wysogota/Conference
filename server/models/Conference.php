@@ -10,6 +10,4 @@ class Conference extends DBModel
   public $event_date;
   public $coord_id;
   public $country_id;
-  public $created_at;
-  public $updated_at;
 }
