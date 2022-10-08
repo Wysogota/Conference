@@ -8,4 +8,3 @@ require_once './routes/routes.php';
 $router = new Router(new Request());
 
 apiRequests($router);
-homeRequests($router);
