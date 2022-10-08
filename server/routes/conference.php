@@ -11,7 +11,7 @@ function conferenceRequests($router)
 
   $router->post($PATH, fn ($request) => createConference($request));
 
-  $router->patch("$PATH/:conferenceId", fn ($request) => updateConference($request));
+  $router->put("$PATH/:conferenceId", fn ($request) => updateConference($request));
 
   $router->delete("$PATH/:conferenceId", fn ($request) => deleteConference($request));
 }

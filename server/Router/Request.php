@@ -37,7 +37,7 @@ class Request implements IRequest
       case 'GET':
         return;
       case 'POST':
-      case 'PATCH':
+      case 'PUT':
       case 'DELETE':
         $data = file_get_contents('php://input');
         $body = json_decode($data, true);

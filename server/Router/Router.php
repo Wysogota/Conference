@@ -6,7 +6,7 @@ class Router
   private $supportedHttpMethods = array(
     'GET',
     'POST',
-    'PATCH',
+    'PUT',
     'DELETE',
   );
 
