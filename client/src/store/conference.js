@@ -33,7 +33,7 @@ class ConferenceStore {
 
   remove = (id) => {
     this.isFetching = true;
-    deleteConference(id).then(this.__handleOneSuccess).catch(this.__handleError);
+    deleteConference(id).then(this.__handleRemoveSuccess).catch(this.__handleError);
   };
 
   __handleAllSuccess = (res) => {
@@ -44,6 +44,12 @@ class ConferenceStore {
   __handleOneSuccess = (res) => {
     this.isFetching = false;
     this.conference = res.data.data;
+  };
+
+  __handleRemoveSuccess = (res) => {
+    this.isFetching = false;
+    const removedConferenceId = res.data.data.id;
+    this.conferences = this.conferences.filter(({ id }) => id !== removedConferenceId);
   };
 
   __handleError = (res) => {
