@@ -1,9 +1,9 @@
 <?php
 
 return [
-  'host' => 'localhost',
-  'db_name' => 'conference',
-  'username' => 'root',
-  'password' => 'password',
+  'host' => getenv('DB_HOST'),
+  'db_name' => getenv('DB_NAME'),
+  'username' => getenv('DB_USERNAME'),
+  'password' => getenv('DB_PASSWORD'),
   'charset' => 'utf8',
 ];
