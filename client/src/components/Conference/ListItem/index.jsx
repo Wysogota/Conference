@@ -1,28 +1,34 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Card, Col } from 'react-bootstrap';
-import cx from 'classnames';
 import { Link } from 'react-router-dom';
-import RemoveItem from '../RemoveItem';
+import { Card } from 'react-bootstrap';
+import { capitalize } from 'lodash';
+import format from 'date-fns/format';
+import cx from 'classnames';
+import Remove from '../Remove';
 import styles from './ListItem.module.scss';
+import { theme, hoveredTheme } from '../../../common/theme';
 import CONSTANTS from '../../../constants';
-
 const { PAGES: { HOME } } = CONSTANTS;
 
 const ListItem = (props) => {
-  const { conference, onClick, className } = props;
+  const { conference } = props;
   const [hovered, setHovered] = useState(false);
 
-  const { id, name, event_date } = conference;
+  const { id, name, event_date, countries_name } = conference;
+  const eventDate = new Date(event_date);
+  const date = format(eventDate, 'dd.MM.yyyy');
+  const time = format(eventDate, 'p');
 
   const cardClasses = cx(
     styles.card,
-    className,
-    'flex-row rounded mb-3',
+    theme, hoveredTheme,
+    'p-2 mb-3 m-auto rounded',
+    'col-md-10 col-lg-8',
   );
   const titleClasses = cx(
     styles.title,
-    'fs-4',
+    'mb-3 fs-2',
   );
 
   return (
@@ -31,28 +37,31 @@ const ListItem = (props) => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <Col xs='8' md='9' xl='10'>
-        <Card.Body>
-          <div className='d-flex justify-content-between'>
-            <Card.Title className={titleClasses}>
-              <Link to={`${HOME}${id}`} onClick={onClick}>{name}</Link>
-            </Card.Title>
-          </div>
-          <div>
-            <div>The event will happen:</div>
-            <time>{event_date}</time>
-          </div>
-          <RemoveItem id={id} hovered={hovered} />
-        </Card.Body>
-      </Col>
+      <Card.Body>
+        <time dateTime={eventDate} className={styles.tiny_text}>{date}</time>
+        <section className='d-flex justify-content-between mb-2 position-relative'>
+          <Card.Title className={titleClasses}>
+            <Link to={`${HOME}${id}`}>{name.toUpperCase()}</Link>
+          </Card.Title>
+          <Remove id={id} hovered={hovered} />
+        </section>
+        <section className='d-flex justify-content-between'>
+          <article>
+            <div className={styles.tiny_text}>{capitalize('country')}</div>
+            <div className='fs-5'>{countries_name.toUpperCase()}</div>
+          </article>
+          <article>
+            <div className={styles.tiny_text}>{capitalize('start at')}</div>
+            <time className='fs-5'>{time}</time>
+          </article>
+        </section>
+      </Card.Body>
     </Card>
   );
 };
 
 ListItem.propTypes = {
   conference: PropTypes.object.isRequired,
-  onClick: PropTypes.func,
-  className: PropTypes.string,
 };
 
 export default ListItem;
