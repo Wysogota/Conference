@@ -1,0 +1,10 @@
+@import '../styles/colors';
+
+.theme {
+  color: $color;
+  background-color: $item_bg_color  !important;
+}
+
+.hoveredTheme:hover {
+  background-color: $hover_item_bg_color  !important;
+}
