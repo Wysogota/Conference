@@ -8,6 +8,7 @@ import cx from 'classnames';
 import Remove from '../Remove';
 import styles from './ListItem.module.scss';
 import { theme, hoveredTheme } from '../../../common/theme';
+import { textOverlow2 } from '../../../common/styles/functions';
 import CONSTANTS from '../../../constants';
 const { PAGES: { HOME } } = CONSTANTS;
 
@@ -27,7 +28,7 @@ const ListItem = (props) => {
     'col-md-10 col-lg-8',
   );
   const titleClasses = cx(
-    styles.title,
+    textOverlow2,
     'mb-3 fs-2',
   );
 

@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import styles from '../Header.module.scss';
+import { textOverlow } from '../../../common/styles/functions';
 
 const MainHeader = (props) => {
   const { className, children } = props;
 
   const classes = cx(
-    styles.header,
+    textOverlow,
     className,
     'pb-3 m-0',
   );

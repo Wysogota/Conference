@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import styles from '../Header.module.scss';
+import { textOverlow } from '../../../common/styles/functions';
 
 const MinorHeader = (props) => {
   const { className, children } = props;
 
   const classes = cx(
-    styles.header,
+    textOverlow,
     className,
     'pb-2 m-0 fs-5',
   );
