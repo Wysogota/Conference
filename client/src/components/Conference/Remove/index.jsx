@@ -1,9 +1,7 @@
-/* eslint-disable react/prop-types */
 import { observer } from 'mobx-react-lite';
 import { Button } from 'react-bootstrap';
 import { motion } from 'framer-motion';
 import { conferenceStore } from '../../../store';
-import styles from './Remove.module.scss';
 
 const initial = { y: -10, opacity: 0 };
 
@@ -19,7 +17,7 @@ const Remove = observer((props) => {
   };
 
   return (
-    <motion.div initial={initial} whileInView={whileInView} className={styles.remove_button}>
+    <motion.div initial={initial} whileInView={whileInView}>
       <Button variant='outline-dark' onClick={onClickHandle} className='h-10'>Remove</Button>
     </motion.div>
   );
