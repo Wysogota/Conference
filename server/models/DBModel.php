@@ -87,12 +87,14 @@ class DBModel
     return new Database();
   }
 
-  public static function findOneById($id)
+  public static function findOneById($id, $assocValues = array())
   {
     $db = static::db();
-    $table = static::$table_name;
+    $tableName = static::$table_name;
 
-    $response = $db->query("SELECT * FROM $table WHERE id=$id;");
+    $associations = static::getAssociations($assocValues);
+    $selectValues = static::getSelectValues($assocValues);
+    $response = $db->query("SELECT $selectValues FROM $tableName $associations WHERE $tableName.id=$id;");
 
     if (!$response) {
       return [];

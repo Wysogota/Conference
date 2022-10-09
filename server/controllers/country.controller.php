@@ -6,20 +6,9 @@ function getCountryById($request)
 {
   try {
     $countryId = $request->params['countryId'];
-
-    $country = Country::findOneById($countryId);
-    $coord = Coord::findOneById($country->coord_id);
-
-    $result = [
-      "id" => $country->id,
-      "name" => $country->name,
-      "coord_id" => $country->coord_id,
-      "lat" => $coord->lat,
-      "lng" => $coord->lng,
-    ];
-
+    $country = Country::findOneById($countryId, [Coord::$table_name => ['lat', 'lng']]);
     http_response_code(200);
-    return json_encode(['data' => $result]);
+    return json_encode(['data' => $country]);
   } catch (PDOException $e) {
     return json_encode(['error' => $e->getMessage()]);
   }
