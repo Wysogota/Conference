@@ -3,16 +3,83 @@ require_once APP_DIR . '/Database/Database.php';
 
 class DBModel
 {
-  protected static $table_name;
+  public static $table_name;
+  protected static $associations;
 
   protected function __construct($instance)
   {
     $reflect = new ReflectionClass($this);
-    $props = $reflect->getProperties(ReflectionProperty::IS_PUBLIC);
+    $public = $reflect->getProperties(ReflectionProperty::IS_PUBLIC);
+    $static = $reflect->getProperties(ReflectionProperty::IS_STATIC);
+    $props = array_diff($public, $static);
+
+    $assocPropsNames = array_filter(
+      $instance,
+      function ($key) {
+        $filterPropNames = array_keys(static::$associations);
+        foreach ($filterPropNames as $propName) {
+          if (stripos($key, $propName) !== false) return true;
+        }
+        return false;
+      },
+      ARRAY_FILTER_USE_KEY
+    );
+
     foreach ($props as $prop) {
       $propName = $prop->getName();
       $this->{$propName} = $instance[$propName];
     }
+    foreach ($assocPropsNames as $key => $value) {
+      $this->{$key} = $instance[$key];
+    }
+  }
+
+  public function __set($name, $value)
+  {
+    $this->$name = $value;
+  }
+
+  protected static function getAssociations($assocValues)
+  {
+    if (count($assocValues) === 0) {
+      return '';
+    }
+
+    $tableName = static::$table_name;
+    $assocTableNames = array_keys($assocValues);
+    $assocArray = array();
+
+    foreach ($assocTableNames as $assocTableName) {
+      $assocId = static::$associations[$assocTableName];
+      if ($assocId) {
+        array_push($assocArray, "JOIN $assocTableName ON $tableName.$assocId=$assocTableName.id");
+      }
+    }
+    $associations = implode(' ', $assocArray);
+    return $associations;
+  }
+
+  protected static function getSelectValues($assocValues)
+  {
+    $tableName = static::$table_name;
+    $defaultSelectValue = "$tableName.*";
+
+    if (count($assocValues) === 0) {
+      return $defaultSelectValue;
+    }
+
+    $assocTableNames = array_keys($assocValues);
+    $selectingValuesArray = array($defaultSelectValue);
+
+    foreach ($assocTableNames as $assocTableName) {
+      $valuesArray = array();
+      foreach ($assocValues[$assocTableName] as $value) {
+        $namedValue = $assocTableName . '_' . $value;
+        array_push($valuesArray, "$assocTableName.$value AS $namedValue");
+      }
+      array_push($selectingValuesArray, implode(',', $valuesArray));
+    }
+    return implode(',', $selectingValuesArray);
   }
 
   protected static function db()
@@ -33,13 +100,15 @@ class DBModel
     return new static($response[0]);
   }
 
-  public static function findAll()
+  public static function findAll($assocValues = array())
   {
     $result = array();
     $db = static::db();
-    $table = static::$table_name;
+    $tableName = static::$table_name;
 
-    $response = $db->query("SELECT * FROM $table;");
+    $associations = static::getAssociations($assocValues);
+    $selectValues = static::getSelectValues($assocValues);
+    $response = $db->query("SELECT $selectValues FROM $tableName $associations;");
 
     for ($i = 0; $i < count($response); $i++) {
       $result[$i] = new static($response[$i]);

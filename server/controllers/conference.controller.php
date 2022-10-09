@@ -31,7 +31,7 @@ function getConferenceById($request)
 function getConferences($request)
 {
   try {
-    $conferences = Conference::findAll();
+    $conferences = Conference::findAll([Country::$table_name => ['name']]);
     http_response_code(200);
     return json_encode(['data' => $conferences]);
   } catch (PDOException $e) {

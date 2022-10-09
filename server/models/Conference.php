@@ -3,7 +3,12 @@ require_once 'DBModel.php';
 
 class Conference extends DBModel
 {
-  protected static $table_name = 'conferences';
+  public static $table_name = 'conferences';
+
+  protected static $associations = [
+    'countries' => 'country_id',
+    'coords' => 'coord_id',
+  ];
 
   public $id;
   public $name;
