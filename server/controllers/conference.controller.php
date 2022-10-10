@@ -6,7 +6,7 @@ function getConferenceById($request)
 {
   try {
     $conferenceId = $request->params['conferenceId'];
-    $conference = Conference::findOneById($conferenceId, [Coord::$table_name => ['lat', 'lng']]);
+    $conference = Conference::findOneById($conferenceId, [Country::$table_name => ['name'], Coord::$table_name => ['lat', 'lng']]);
     http_response_code(200);
     return json_encode(['data' => $conference]);
   } catch (PDOException $e) {
