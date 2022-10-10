@@ -2,7 +2,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { capitalize } from 'lodash';
 import cx from 'classnames';
 import MainHeader from '../../components/BasicElements/MainHeader';
-import Create from '../../components/Conference/Create';
+import CreationButton from '../../components/Conference/CreationButton';
 import List from '../../components/Conference/List';
 import { theme } from '../../common/theme';
 
@@ -16,7 +16,7 @@ const Home = () => {
           <MainHeader>{capitalize('conferences')}</MainHeader>
         </Col>
         <Col sm='6' lg='4' className='text-center text-sm-end'>
-          <Create />
+          <CreationButton />
         </Col>
       </Row>
       <Row>

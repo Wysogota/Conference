@@ -6,7 +6,7 @@ import { textOverlow } from '../../../common/styles/functions';
 import CONSTANTS from '../../../constants';
 const { PAGES: { CREATE } } = CONSTANTS;
 
-const Create = () => {
+const CreationButton = () => {
   const classes = cx(textOverlow, 'mw-100');
 
   return (
@@ -19,4 +19,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default CreationButton;
