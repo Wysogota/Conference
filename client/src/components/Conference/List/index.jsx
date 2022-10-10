@@ -8,7 +8,7 @@ const List = observer(() => {
   const { getAll, conferences, isFetching, error } = conferenceStore;
   useEffect(() => { getAll(); }, []);
 
-  const fetching = useFetching({ data: conferences, title: error, isFetching });
+  const fetching = useFetching({ data: conferences, isFetching });
   if (fetching) return fetching;
 
   return (

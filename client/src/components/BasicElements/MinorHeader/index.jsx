@@ -8,7 +8,7 @@ const MinorHeader = (props) => {
   const classes = cx(
     textOverlow,
     className,
-    'pb-2 m-0 fs-5',
+    'pb-2 m-0 fs-3',
   );
 
   return (
