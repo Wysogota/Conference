@@ -12,22 +12,15 @@ import EditButton from '../../components/Conference/EditButton';
 import Remove from '../../components/Conference/Remove';
 import { conferenceStore } from '../../store';
 import useFetching from '../../hooks/useFetching';
-import useAfterRequestAction from '../../hooks/useAfterRequestAction';
 import { theme } from '../../common/theme';
-import CONSTANTS from '../../constants';
-const { PAGES: { HOME } } = CONSTANTS;
 
 const Conference = observer(() => {
-  const { getOne, conference, isFetching, error } = conferenceStore;
+  const { getOne, conference } = conferenceStore;
   const { conferenceId } = useParams();
-  const navigate = useNavigate();
 
   useEffect(() => { getOne(conferenceId); }, [conferenceId]);
 
-  const action = () => navigate(HOME, { replace: true });
-  const { setIsRequested } = useAfterRequestAction(action, isFetching, error);
-
-  const fetching = useFetching({ data: conference, isFetching });
+  const fetching = useFetching({ data: conference });
   if (fetching) return fetching;
 
   const { name, event_date, countries_name, coords_lat, coords_lng } = conference;
@@ -53,7 +46,7 @@ const Conference = observer(() => {
           </Col>
           <Col className='text-end'>
             <EditButton id={conferenceId} />
-            <Remove id={conferenceId} onClick={() => setIsRequested(true)} className='ms-2' />
+            <Remove id={conferenceId} className='ms-2' />
           </Col>
         </Row>
         <Row>

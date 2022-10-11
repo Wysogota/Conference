@@ -1,20 +1,26 @@
 import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { motion } from 'framer-motion';
-import { isFunction } from 'lodash';
+import { capitalize } from 'lodash';
 import { conferenceStore } from '../../../store';
+import useAfterRequestAction from '../../../hooks/useAfterRequestAction';
+import CONSTANTS from '../../../constants';
+const { PAGES: { HOME } } = CONSTANTS;
 
 const initial = { y: -10, opacity: 0 };
 
 const Remove = observer((props) => {
-  const { id, hovered, onClick, className } = props;
-  const { remove } = conferenceStore;
+  const { id, hovered, className } = props;
+  const { remove, error } = conferenceStore;
+  
+  const navigate = useNavigate();
+  const action = () => navigate(HOME, { replace: true });
+  const { setIsRequested } = useAfterRequestAction(action, error);
 
   const onClickHandle = () => {
     remove(id);
-    if (isFunction(onClick)) {
-      onClick();
-    }
+    setIsRequested(true);
   };
 
   const whileInView = {
@@ -25,13 +31,13 @@ const Remove = observer((props) => {
 
   if (hovered === undefined) {
     return (
-      <Button variant='outline-dark' onClick={onClickHandle} className={className}>Remove</Button>
+      <Button variant='outline-dark' onClick={onClickHandle} className={className}>{capitalize('remove')}</Button>
     );
   }
 
   return (
     <motion.div initial={initial} whileInView={whileInView}>
-      <Button variant='outline-dark' onClick={onClickHandle} className={className}>Remove</Button>
+      <Button variant='outline-dark' onClick={onClickHandle} className={className}>{capitalize('remove')}</Button>
     </motion.div>
   );
 });
