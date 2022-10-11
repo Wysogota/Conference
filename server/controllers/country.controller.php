@@ -17,7 +17,7 @@ function getCountryById($request)
 function getCountries($request)
 {
   try {
-    $counties = Country::findAll();
+    $counties = Country::findAll([Coord::$table_name => ['lat', 'lng']]);
     http_response_code(200);
     return json_encode(['data' => $counties]);
   } catch (PDOException $e) {
