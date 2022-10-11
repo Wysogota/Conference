@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { InputGroup } from 'react-bootstrap';
-import styles from './CreationForm.module.scss';
 import DateInput from '../../DateInput';
 import { capitalize } from 'lodash';
-import { useEffect, useState } from 'react';
+import moment from 'moment';
+import styles from './CreationForm.module.scss';
 
 const EventDateInput = (props) => {
   const { eventDate, setFieldValue, groupClasses } = props;
@@ -17,10 +18,12 @@ const EventDateInput = (props) => {
     setFieldValue('eventDate', date);
   }, [date]);
 
+  const validateDate = (currentDate) => currentDate > moment();
+
   return (
     <InputGroup className={groupClasses}>
       <InputGroup.Text className={styles.label}>{capitalize('event date')}</InputGroup.Text>
-      <DateInput date={date} setDate={setDate} className={styles.input}/>
+      <DateInput date={date} setDate={setDate} validateDate={validateDate} className={styles.input}/>
     </InputGroup>
   );
 };

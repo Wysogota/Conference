@@ -6,7 +6,7 @@ import cx from 'classnames';
 import 'react-datetime/css/react-datetime.css';
  
 const DateInput = (props) => {
-  const { date, setDate, className } = props;
+  const { date, setDate, validateDate, className } = props;
 
   const onChangeHandle = (date) => {
     setDate(date.format('YYYY-MM-DD HH:mm'));
@@ -20,6 +20,7 @@ const DateInput = (props) => {
       onChange={onChangeHandle}
       inputProps={{ readOnly: true }}
       dateFormat='YYYY-MM-DD'
+      isValidDate={validateDate}
       className={classes}
     />
   );
@@ -28,6 +29,7 @@ const DateInput = (props) => {
 DateInput.propTypes = {
   date: PropTypes.string.isRequired,
   setDate: PropTypes.func.isRequired,
+  validateDate: PropTypes.func,
   className: PropTypes.string,
 };
 

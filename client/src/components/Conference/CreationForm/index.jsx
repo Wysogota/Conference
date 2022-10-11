@@ -17,7 +17,7 @@ import { CONFERENCE_FORM_SCHEMA } from '../../../utils/validationSchemas';
 
 const initialValues = {
   name: '',
-  eventDate: moment().format('YYYY-MM-DD HH:mm'),
+  eventDate: moment().add(1, 'day').format('YYYY-MM-DD'),
   lat: '',
   lng: '',
   country: '0',
