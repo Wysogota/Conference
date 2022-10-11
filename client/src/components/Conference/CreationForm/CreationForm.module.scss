@@ -1,0 +1,64 @@
+@import '../../../common/styles/colors';
+
+.label {
+  min-width: 5rem;
+  width: 12vw;
+  justify-content: center;
+  border: none !important;
+  background-color: $input_bg_color  !important;
+  white-space: initial !important;
+}
+
+.input_container {
+  padding-bottom: 1.2rem;
+  flex-wrap: nowrap !important;
+
+  &:focus-within>.label {
+    background-color: $focus_input_bg_color  !important;
+  }
+}
+
+.submit:focus,
+.submit:hover {
+  background-color: $focus_input_bg_color  !important;
+}
+
+.input {
+  background-color: inherit !important;
+  color: inherit !important;
+
+  border: none !important;
+  border-bottom: 1px solid $input_bg_color  !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  &:focus {
+    border-color: $focus_input_bg_color  !important;
+  }
+}
+
+.error {
+  color: $error_color;
+  font-size: 0.9rem;
+
+  position: absolute;
+  bottom: 0;
+}
+
+.select_error {
+  padding-right: 2rem;
+}
+
+.border {
+  border-left: 1px solid $input_bg_color;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}

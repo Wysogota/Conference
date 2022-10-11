@@ -1,0 +1,15 @@
+.datetime {
+  flex: 1 1 auto;
+
+  &>input {
+    height: 100%;
+    background-color: inherit;
+    border: none;
+    box-shadow: none;
+
+    &:focus {
+      background-color: inherit;
+      box-shadow: none;
+    }
+  }
+}

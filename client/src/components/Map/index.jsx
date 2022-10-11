@@ -1,43 +1,62 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 import { Spinner } from 'react-bootstrap';
+import { isFunction, isNumber } from 'lodash';
+import { useState, useEffect } from 'react';
 
 const Map = (props) => {
-  const { coord: { lat, lng }, fixed, className } = props;
-  const [position, setPosition] = useState({ lat, lng });
+  const { coord, setCoord, fixed, className } = props;
+  const isCoordValid = isNumber(coord.lat) && isNumber(coord.lng);
+  const [defaultCoord, setDefaultCoord] = useState();
+
+  useEffect(() => {
+    if (isCoordValid) {
+      setDefaultCoord(coord);
+    }
+  }, [coord]);
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
 
   const onClickHandle = (e) => {
     const { lat, lng } = e.latLng;
-    setPosition({
-      lat: lat(),
-      lng: lng(),
-    });
+
+    if (isFunction(setCoord)) {
+      setCoord({
+        lat: lat(),
+        lng: lng(),
+      });
+    }
   };
 
   if (!isLoaded) return <Spinner animation='border' role='status' />;
-
+  
   return (
     <GoogleMap
-      zoom={15} center={position}
+      zoom={15} center={defaultCoord}
       mapContainerStyle={{ aspectRatio: '1/1' }}
       options={{ disableDefaultUI: true }}
       onRightClick={!fixed && onClickHandle}
       mapContainerClassName={className}
     >
-      <MarkerF position={position} onRightClick />
+      {isCoordValid && <MarkerF position={defaultCoord} onRightClick />}
     </GoogleMap>
   );
 };
 
 Map.propTypes = {
   coord: PropTypes.shape({
-    lat: PropTypes.number.isRequired,
-    lng: PropTypes.number.isRequired,
+    lat: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]).isRequired,
+    lng: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]).isRequired,
   }).isRequired,
+  setCoord: PropTypes.func,
   fixed: PropTypes.bool,
   className: PropTypes.string,
 };
