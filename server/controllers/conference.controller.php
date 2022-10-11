@@ -9,7 +9,7 @@ function getConferenceById($request)
     $conference = Conference::findOneById($conferenceId, [Country::$table_name => ['name'], Coord::$table_name => ['lat', 'lng']]);
     http_response_code(200);
     return json_encode(['data' => $conference]);
-  } catch (PDOException $e) {
+  } catch (Throwable $e) {
     http_response_code(500);
     return json_encode(['error' => $e->getMessage()]);
   }
@@ -21,7 +21,7 @@ function getConferences($request)
     $conferences = Conference::findAll([Country::$table_name => ['name']]);
     http_response_code(200);
     return json_encode(['data' => $conferences]);
-  } catch (PDOException $e) {
+  } catch (Throwable $e) {
     http_response_code(500);
     return json_encode(['error' => $e->getMessage()]);
   }
@@ -55,7 +55,7 @@ function createConference($request)
 
     http_response_code(201);
     return json_encode(['data' => $result]);
-  } catch (PDOException $e) {
+  } catch (Throwable $e) {
     http_response_code(500);
     return json_encode(['error' => $e->getMessage()]);
   }
@@ -89,7 +89,7 @@ function updateConference($request)
 
     http_response_code(200);
     return json_encode(['data' => $result]);
-  } catch (PDOException $e) {
+  } catch (Throwable $e) {
     http_response_code(500);
     return json_encode(['error' => $e->getMessage()]);
   }
@@ -114,7 +114,7 @@ function deleteConference($request)
 
     http_response_code(200);
     return json_encode(['data' => $result]);
-  } catch (PDOException $e) {
+  } catch (Throwable $e) {
     http_response_code(500);
     return json_encode(['error' => $e->getMessage()]);
   }

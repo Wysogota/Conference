@@ -9,7 +9,7 @@ function getCountryById($request)
     $country = Country::findOneById($countryId, [Coord::$table_name => ['lat', 'lng']]);
     http_response_code(200);
     return json_encode(['data' => $country]);
-  } catch (PDOException $e) {
+  } catch (Throwable $e) {
     return json_encode(['error' => $e->getMessage()]);
   }
 }
@@ -20,7 +20,7 @@ function getCountries($request)
     $counties = Country::findAll([Coord::$table_name => ['lat', 'lng']]);
     http_response_code(200);
     return json_encode(['data' => $counties]);
-  } catch (PDOException $e) {
+  } catch (Throwable $e) {
     return json_encode(['error' => $e->getMessage()]);
   }
 }
@@ -49,7 +49,7 @@ function createCountry($request)
 
     http_response_code(201);
     return json_encode(['data' => $result]);
-  } catch (PDOException $e) {
+  } catch (Throwable $e) {
     return json_encode(['error' => $e->getMessage()]);
   }
 }
