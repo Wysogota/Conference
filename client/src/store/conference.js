@@ -63,7 +63,7 @@ class ConferenceStore {
 
   __handleError = (res) => {
     this.isFetching = false;
-    this.error = res.response.data.error;
+    this.error = res.response.data;
   };
 }
 

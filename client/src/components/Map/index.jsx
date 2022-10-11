@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 import { Spinner } from 'react-bootstrap';
-import { isFunction, isNumber } from 'lodash';
+import { isFinite, isFunction } from 'lodash';
 import { useState, useEffect } from 'react';
 
 const Map = (props) => {
   const { coord, setCoord, fixed, className } = props;
-  const isCoordValid = isNumber(coord.lat) && isNumber(coord.lng);
+  const isCoordValid = isFinite(coord.lat) && isFinite(coord.lng);
   const [defaultCoord, setDefaultCoord] = useState();
-
+  
   useEffect(() => {
     if (isCoordValid) {
       setDefaultCoord(coord);

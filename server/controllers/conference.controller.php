@@ -11,7 +11,7 @@ function getConferenceById($request)
     return json_encode(['data' => $conference]);
   } catch (Throwable $e) {
     http_response_code(500);
-    return json_encode(['error' => $e->getMessage()]);
+    return json_encode($e->getMessage());
   }
 }
 
@@ -23,7 +23,7 @@ function getConferences($request)
     return json_encode(['data' => $conferences]);
   } catch (Throwable $e) {
     http_response_code(500);
-    return json_encode(['error' => $e->getMessage()]);
+    return json_encode($e->getMessage());
   }
 }
 
@@ -57,7 +57,7 @@ function createConference($request)
     return json_encode(['data' => $result]);
   } catch (Throwable $e) {
     http_response_code(500);
-    return json_encode(['error' => $e->getMessage()]);
+    return json_encode($e->getMessage());
   }
 }
 
@@ -91,7 +91,7 @@ function updateConference($request)
     return json_encode(['data' => $result]);
   } catch (Throwable $e) {
     http_response_code(500);
-    return json_encode(['error' => $e->getMessage()]);
+    return json_encode($e->getMessage());
   }
 }
 
@@ -116,6 +116,6 @@ function deleteConference($request)
     return json_encode(['data' => $result]);
   } catch (Throwable $e) {
     http_response_code(500);
-    return json_encode(['error' => $e->getMessage()]);
+    return json_encode($e->getMessage());
   }
 }

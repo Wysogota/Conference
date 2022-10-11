@@ -12,6 +12,7 @@
 .input_container {
   margin-bottom: 1.2rem;
   flex-wrap: nowrap !important;
+  position: relative;
 
   &:focus-within>.label {
     background-color: $focus_input_bg_color  !important;
@@ -44,7 +45,7 @@
   font-size: 0.9rem;
 
   position: absolute;
-  bottom: 0;
+  bottom: -55%;
 }
 
 .select_error {

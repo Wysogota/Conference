@@ -10,7 +10,7 @@ function getCountryById($request)
     http_response_code(200);
     return json_encode(['data' => $country]);
   } catch (Throwable $e) {
-    return json_encode(['error' => $e->getMessage()]);
+    return json_encode($e->getMessage());
   }
 }
 
@@ -21,7 +21,7 @@ function getCountries($request)
     http_response_code(200);
     return json_encode(['data' => $counties]);
   } catch (Throwable $e) {
-    return json_encode(['error' => $e->getMessage()]);
+    return json_encode($e->getMessage());
   }
 }
 
@@ -50,6 +50,6 @@ function createCountry($request)
     http_response_code(201);
     return json_encode(['data' => $result]);
   } catch (Throwable $e) {
-    return json_encode(['error' => $e->getMessage()]);
+    return json_encode($e->getMessage());
   }
 }

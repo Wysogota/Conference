@@ -15,14 +15,14 @@ import useFetching from '../../hooks/useFetching';
 const { PAGES: { HOME } } = CONSTANTS;
 
 const Edit = observer(() => {
-  const { getOne, update, conference, error } = conferenceStore;
+  const { getOne, update, conference, isFetching, error } = conferenceStore;
 
   const { conferenceId } = useParams();
   useEffect(() => { getOne(conferenceId); }, []);
 
   const navigate = useNavigate();
-  const action = () => navigate(HOME + conference.id);
-  const { setIsRequested } = useAfterRequestAction(action, error);
+  const action = () => navigate(HOME + conferenceId);
+  const { setIsRequested } = useAfterRequestAction(action, isFetching, error);
 
   const submitAction = (id, conference) => {
     setIsRequested(true);

@@ -12,11 +12,11 @@ const initial = { y: -10, opacity: 0 };
 
 const Remove = observer((props) => {
   const { id, hovered, className } = props;
-  const { remove, error } = conferenceStore;
+  const { remove, isFetching, error } = conferenceStore;
   
   const navigate = useNavigate();
   const action = () => navigate(HOME, { replace: true });
-  const { setIsRequested } = useAfterRequestAction(action, error);
+  const { setIsRequested } = useAfterRequestAction(action, isFetching, error);
 
   const onClickHandle = () => {
     remove(id);

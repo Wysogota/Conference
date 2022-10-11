@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import { isFunction } from 'lodash';
 
-const useAfterRequestAction = (action, error) => {
+const useAfterRequestAction = (action, isFetching, error) => {
   const [isRequested, setIsRequested] = useState(false);
 
   useEffect(() => {
-    if (isRequested && !error) {
+    if (isRequested && !error && !isFetching) {
       setIsRequested(false);
       if (isFunction(action)) {
         action();
       }
     }
-  }, [isRequested]);
+  }, [isFetching]);
 
   return { setIsRequested };
 };

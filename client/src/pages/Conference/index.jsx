@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Container, Row, Col } from 'react-bootstrap';
 import { capitalize } from 'lodash';
@@ -20,7 +20,7 @@ const Conference = observer(() => {
 
   useEffect(() => { getOne(conferenceId); }, [conferenceId]);
 
-  const fetching = useFetching({ data: conference });
+  const fetching = useFetching({ data: conference, title: 'Conference not found' });
   if (fetching) return fetching;
 
   const { name, event_date, countries_name, coords_lat, coords_lng } = conference;
@@ -32,7 +32,7 @@ const Conference = observer(() => {
   return (
     <Container >
       <Row className={headerClasses}>
-        <Col>
+        <Col sm='8'>
           <MainHeader>{capitalize(name)}</MainHeader>
         </Col>
         <Col className='text-end fs-5'>

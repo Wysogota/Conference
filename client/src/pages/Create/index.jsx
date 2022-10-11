@@ -13,11 +13,11 @@ import CONSTANTS from '../../constants';
 const { PAGES: { HOME } } = CONSTANTS;
 
 const Create = observer(() => {
-  const { create, error } = conferenceStore;
+  const { create, isFetching, error } = conferenceStore;
   const navigate = useNavigate();
 
   const action = () => navigate(HOME);
-  const { setIsRequested } = useAfterRequestAction(action, error);
+  const { setIsRequested } = useAfterRequestAction(action, isFetching, error);
 
   const submitAction = (conference) => {
     setIsRequested(true);

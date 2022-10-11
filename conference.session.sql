@@ -1,6 +1,6 @@
-DROP TABLE coords;
-DROP TABLE countries;
 DROP TABLE conferences;
+DROP TABLE countries;
+DROP TABLE coords;
 
 CREATE TABLE coords(
   id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -21,7 +21,7 @@ CREATE TABLE countries(
 
 CREATE TABLE conferences(
   id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(50) NOT NULL,
+  name VARCHAR(255) NOT NULL CHECK(CHAR_LENGTH(name) > 2),
   event_date DATETIME NOT NULL,
   coord_id INTEGER UNIQUE,
   country_id INTEGER,
@@ -43,10 +43,15 @@ INSERT INTO coords (lat, lng) VALUES
  (
     '47.826158506197494',
     '35.16676034248282'
+ ),
+ (
+    '48.14392971395289',
+    '17.10965758368268'
  );
 
 INSERT INTO countries (name, coord_id) VALUES
- ('Ukraine', 1);
+ ('Ukraine', 1),
+ ('Slovakia', 4);
 
 INSERT INTO conferences (name, event_date, coord_id, country_id) VALUES 
 ('Conference1', NOW() + INTERVAL 5 DAY, 2, 1),
