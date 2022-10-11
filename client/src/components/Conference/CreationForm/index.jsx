@@ -1,46 +1,49 @@
-import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { observer } from 'mobx-react-lite';
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import cx from 'classnames';
 import moment from 'moment';
 import { capitalize } from 'lodash';
+import Remove from '../Remove';
 import MapInput from './MapInput';
 import CoordInput from './CoordInput';
 import SelectCountryInput from './SelectCountryInput';
 import EventDateInput from './EventDateInput';
-import useFetching from '../../../hooks/useFetching';
-import { countryStore } from '../../../store';
 import styles from './CreationForm.module.scss';
 import { CONFERENCE_FORM_SCHEMA } from '../../../utils/validationSchemas';
 
-const initialValues = {
-  name: '',
-  eventDate: moment().add(1, 'day').format('YYYY-MM-DD'),
-  lat: '',
-  lng: '',
-  country: '0',
+const initialValues = (conference = {}) => {
+  return {
+    name: conference?.name || '',
+    eventDate: conference?.event_date || moment().add(1, 'day').format('YYYY-MM-DD'),
+    lat: Number(conference?.coords_lat) || '',
+    lng: Number(conference?.coords_lng) || '',
+    country: conference?.country_id || '0',
+  };
 };
 
-const CreationForm = observer((props) => {
-  const { submitAction } = props;
-  const { getAll, countries, isFetching } = countryStore;
-
-  useEffect(() => { getAll(); }, []);
+const CreationForm = (props) => {
+  const { conference, submitAction, editMode } = props;
 
   const onSubmit = (values, formikBag) => {
     const { name, eventDate: event_date, lat, lng, country: country_id } = values;
-    submitAction({ name, event_date, lat, lng, country_id });
+    const result = { name, event_date, lat, lng, country_id };
+
+    if (editMode) {
+      result.coord_id = conference.coord_id;
+      submitAction(conference.id, result);
+    } else {
+      submitAction(result);
+    }
+
     formikBag.resetForm();
   };
 
-  const fetching = useFetching({ data: countries, isFetching });
-  if (fetching) return fetching;
+  const buttonClasses = cx(styles.label, styles.submit);
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={initialValues(conference)}
       validationSchema={CONFERENCE_FORM_SCHEMA}
       onSubmit={onSubmit}
     >{({ values, setFieldValue }) => (
@@ -48,7 +51,7 @@ const CreationForm = observer((props) => {
         <InputGroup className={styles.input_container}>
           <InputGroup.Text className={styles.label}>{capitalize('title')}</InputGroup.Text>
           <FormControl as={Field} name='name' className={styles.input} />
-          <ErrorMessage name='name' component='div' className={styles.error} />
+          <ErrorMessage name='name' component='span' className={styles.error} />
         </InputGroup>
         
         <EventDateInput
@@ -67,15 +70,26 @@ const CreationForm = observer((props) => {
           <MapInput lat={values.lat} lng={values.lng} setFieldValue={setFieldValue} />
         </>}
 
-        <Button type='submit' variant='light' className={cx(styles.label, styles.submit)}>Save</Button>
+        {editMode
+          ? (
+            <div className='d-flex justify-content-between'>
+              <Button type='submit' variant='light' className={buttonClasses}>Save</Button>
+              <Remove id={conference.id} className={buttonClasses} />
+            </div>
+            )
+          : (
+            <Button type='submit' variant='light' className={buttonClasses}>Save</Button>
+            )}
       </Form>
     )}
     </Formik>
   );
-});
+};
 
 CreationForm.propTypes = {
+  conference: PropTypes.object,
   submitAction: PropTypes.func.isRequired,
+  editMode: PropTypes.bool,
 };
 
 export default CreationForm;
