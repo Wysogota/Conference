@@ -1,13 +1,14 @@
-import { Button, Col, Container, Row } from 'react-bootstrap';
-import cx from 'classnames';
-import MainHeader from '../../components/BasicElements/MainHeader';
-import { theme } from '../../common/theme';
-import { capitalize } from 'lodash';
-import CreationForm from '../../components/Conference/CreationForm';
+import { Container, Row, Col } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
-import { conferenceStore } from '../../store';
 import { useNavigate } from 'react-router-dom';
+import { capitalize } from 'lodash';
+import cx from 'classnames';
+import { conferenceStore } from '../../store';
+import CreationForm from '../../components/Conference/CreationForm';
+import MainHeader from '../../components/BasicElements/MainHeader';
+import BackButton from '../../components/BasicElements/BackButton';
 import useAfterRequestAction from '../../hooks/useAfterRequestAction';
+import { theme } from '../../common/theme';
 import CONSTANTS from '../../constants';
 const { PAGES: { HOME } } = CONSTANTS;
 
@@ -41,7 +42,7 @@ const Create = observer(() => {
         </Row>
         <Row>
           <Col md='6' className='m-auto'>
-            <Button variant='outline-dark' className='w-100'>Back</Button>
+            <BackButton />
           </Col>
         </Row>
       </Col>
