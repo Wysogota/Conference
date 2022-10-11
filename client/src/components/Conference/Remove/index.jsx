@@ -7,7 +7,7 @@ import { conferenceStore } from '../../../store';
 const initial = { y: -10, opacity: 0 };
 
 const Remove = observer((props) => {
-  const { id, hovered, onClick } = props;
+  const { id, hovered, onClick, className } = props;
   const { remove } = conferenceStore;
 
   const onClickHandle = () => {
@@ -25,13 +25,13 @@ const Remove = observer((props) => {
 
   if (hovered === undefined) {
     return (
-      <Button variant='outline-dark' onClick={onClickHandle}>Remove</Button>
+      <Button variant='outline-dark' onClick={onClickHandle} className={className}>Remove</Button>
     );
   }
 
   return (
     <motion.div initial={initial} whileInView={whileInView}>
-      <Button variant='outline-dark' onClick={onClickHandle}>Remove</Button>
+      <Button variant='outline-dark' onClick={onClickHandle} className={className}>Remove</Button>
     </motion.div>
   );
 });

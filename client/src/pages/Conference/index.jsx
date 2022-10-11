@@ -8,6 +8,7 @@ import { format } from 'date-fns';
 import MainHeader from '../../components/BasicElements/MainHeader';
 import MinorHeader from '../../components/BasicElements/MinorHeader';
 import Map from '../../components/Map';
+import EditButton from '../../components/Conference/EditButton';
 import Remove from '../../components/Conference/Remove';
 import { conferenceStore } from '../../store';
 import useFetching from '../../hooks/useFetching';
@@ -51,7 +52,8 @@ const Conference = observer(() => {
             <MinorHeader>{capitalize(countries_name)}</MinorHeader>
           </Col>
           <Col className='text-end'>
-            <Remove id={conferenceId} onClick={() => setIsRequested(true)}/>
+            <EditButton id={conferenceId} />
+            <Remove id={conferenceId} onClick={() => setIsRequested(true)} className='ms-2' />
           </Col>
         </Row>
         <Row>
