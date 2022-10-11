@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { InputGroup, FormControl } from 'react-bootstrap';
-import { Field } from 'formik';
+import { Field, ErrorMessage } from 'formik';
 import cx from 'classnames';
 import { capitalize } from 'lodash';
 import styles from './CreationForm.module.scss';
@@ -16,6 +16,7 @@ const CoordInput = (props) => {
           name='lat'
           className={styles.input}
         />
+        <ErrorMessage name='lat' component='span' className={styles.error} />
       </InputGroup>
       <InputGroup as='article' className={cx(groupClasses, styles.border)}>
         <FormControl as={Field}
@@ -24,6 +25,7 @@ const CoordInput = (props) => {
           className={styles.input}
         />
         <InputGroup.Text className={styles.label}>{capitalize('lng')}</InputGroup.Text>
+        <ErrorMessage name='lng' component='span' className={styles.error} />
       </InputGroup>
     </section>
   );
