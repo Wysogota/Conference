@@ -10,7 +10,7 @@
 }
 
 .input_container {
-  padding-bottom: 1.2rem;
+  margin-bottom: 1.2rem;
   flex-wrap: nowrap !important;
 
   &:focus-within>.label {
@@ -20,6 +20,7 @@
 
 .submit:focus,
 .submit:hover {
+  color: $color  !important;
   background-color: $focus_input_bg_color  !important;
 }
 

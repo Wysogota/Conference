@@ -5,7 +5,7 @@ import useFetching from '../../../hooks/useFetching';
 import ListItem from '../ListItem';
 
 const List = observer(() => {
-  const { getAll, conferences, isFetching, error } = conferenceStore;
+  const { getAll, conferences, isFetching } = conferenceStore;
   useEffect(() => { getAll(); }, []);
 
   const fetching = useFetching({ data: conferences, isFetching });

@@ -14,8 +14,8 @@ const App = () => {
       <Header />
       <Routes>
         <Route path={HOME} element={<Home />} />
-        <Route path={`${HOME}/:conferenceId`} element={<Conference />} />
-        <Route path={`${HOME}/:conferenceId${EDIT}`} element={<Edit />} />
+        <Route path={`${HOME}:conferenceId`} element={<Conference />} />
+        <Route path={`${HOME}:conferenceId${EDIT}`} element={<Edit />} />
         <Route path={CREATE} element={<Create />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes>

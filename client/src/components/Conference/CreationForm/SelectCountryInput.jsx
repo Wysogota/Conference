@@ -5,10 +5,13 @@ import { capitalize } from 'lodash';
 import cx from 'classnames';
 import { countryStore } from '../../../store';
 import styles from './CreationForm.module.scss';
+import useFetching from '../../../hooks/useFetching';
+import { useEffect } from 'react';
 
 const SelectCountryInput = (props) => {
   const { setFieldValue, groupClasses } = props;
-  const { countries } = countryStore;
+  const { getAll, countries, isFetching } = countryStore;
+  useEffect(() => { getAll(); }, []);
 
   const onClickHandle = (lat, lng) => {
     setFieldValue('lat', Number(lat));
@@ -16,6 +19,9 @@ const SelectCountryInput = (props) => {
   };
 
   const errorClasses = cx(styles.error, styles.select_error);
+
+  const fetching = useFetching({ data: countries, isFetching });
+  if (fetching) return fetching;
 
   return (
     <InputGroup className={groupClasses}>

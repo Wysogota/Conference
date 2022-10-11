@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { textOverlow } from '../../../common/styles/functions';
+import { textOverlow2 } from '../../../common/styles/functions';
 
 const MainHeader = (props) => {
   const { className, children } = props;
 
   const classes = cx(
-    textOverlow,
+    textOverlow2,
     className,
-    'pb-3 m-0',
+    'mb-3 m-0',
   );
 
   return (
