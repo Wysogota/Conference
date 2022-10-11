@@ -13,12 +13,14 @@ class CountryStore {
 
   getOne = (id) => {
     this.isFetching = true;
+    this.country = null;
     this.error = null;
     getCountry(id).then(this.__handleOneSuccess).catch(this.__handleError);
   };
 
   getAll = () => {
     this.isFetching = true;
+    this.country = null;
     this.error = null;
     getCountries().then(this.__handleAllSuccess).catch(this.__handleError);
   };

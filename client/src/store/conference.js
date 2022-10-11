@@ -13,24 +13,28 @@ class ConferenceStore {
 
   getOne = (id) => {
     this.isFetching = true;
+    this.conference = null;
     this.error = null;
     getConference(id).then(this.__handleOneSuccess).catch(this.__handleError);
   };
 
   getAll = () => {
     this.isFetching = true;
+    this.conferences = [];
     this.error = null;
     getConferences().then(this.__handleAllSuccess).catch(this.__handleError);
   };
 
   create = (conference) => {
     this.isFetching = true;
+    this.conference = null;
     this.error = null;
     createConference(conference).then(this.__handleOneSuccess).catch(this.__handleError);
   };
 
   update = (id, conference) => {
     this.isFetching = true;
+    this.conference = null;
     this.error = null;
     updateConference(id, conference).then(this.__handleOneSuccess).catch(this.__handleError);
   };
