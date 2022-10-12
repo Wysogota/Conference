@@ -1,7 +1,11 @@
 import * as yup from 'yup';
 
 export const CONFERENCE_FORM_SCHEMA = yup.object({
-  name: yup.string().min(2, 'Min 2 chars').max(255, 'Max 255 chars').required('Enter name'),
+  name: yup
+    .string()
+    .matches(/^[a-zA-Z0-9-]+$/, 'This field cannot contain white space and special character')
+    .min(2, 'Min 2 chars').max(255, 'Max 255 chars')
+    .required('Enter name'),
   eventDate: yup.string().required(),
   lat: yup.number(),
   lng: yup.number(),
