@@ -110,7 +110,7 @@ class DBModel
 
     $associations = static::getAssociations($assocValues);
     $selectValues = static::getSelectValues($assocValues);
-    $response = $db->query("SELECT $selectValues FROM $tableName $associations;");
+    $response = $db->query("SELECT $selectValues FROM $tableName $associations ORDER BY updated_at DESC;");
 
     for ($i = 0; $i < count($response); $i++) {
       $result[$i] = new static($response[$i]);
