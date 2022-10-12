@@ -1,4 +1,11 @@
 <?php
+
+namespace Models;
+
+use DB\Database;
+use ReflectionClass;
+use ReflectionProperty;
+
 require_once APP_DIR . '/Database/Database.php';
 
 class DBModel

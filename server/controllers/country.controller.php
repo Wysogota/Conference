@@ -1,4 +1,8 @@
 <?php
+
+use Models\Coord;
+use Models\Country;
+
 require_once APP_DIR . '/models/Country.php';
 require_once APP_DIR . '/models/Coord.php';
 

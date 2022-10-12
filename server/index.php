@@ -1,4 +1,8 @@
 <?php
+
+use Router\Request;
+use Router\Router;
+
 define('APP_DIR', $_SERVER['DOCUMENT_ROOT']);
 
 require_once './Router/Request.php';

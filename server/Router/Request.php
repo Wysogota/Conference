@@ -1,4 +1,7 @@
 <?php
+
+namespace Router;
+
 require_once 'IRequest.php';
 
 class Request implements IRequest

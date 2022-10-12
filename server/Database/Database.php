@@ -1,4 +1,10 @@
 <?php
+
+namespace DB;
+
+use PDO;
+use PDOException;
+
 class Database
 {
   private $link;

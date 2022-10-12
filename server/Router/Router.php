@@ -1,4 +1,7 @@
 <?php
+
+namespace Router;
+
 class Router
 {
   private $request;
@@ -24,7 +27,7 @@ class Router
 
     $this->request->getParams($route);
     $this->request->getBody($route);
-    
+
     $this->{strtolower($name)}[$this->formatRoute($route)] = $method;
   }
 

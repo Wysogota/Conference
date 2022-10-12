@@ -1,4 +1,9 @@
 <?php
+
+use Models\Conference;
+use Models\Coord;
+use Models\Country;
+
 require_once APP_DIR . '/models/Conference.php';
 require_once APP_DIR . '/models/Coord.php';
 

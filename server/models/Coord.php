@@ -1,4 +1,7 @@
 <?php
+
+namespace Models;
+
 require_once 'DBModel.php';
 
 class Coord extends DBModel
