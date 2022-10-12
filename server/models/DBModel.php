@@ -15,17 +15,19 @@ class DBModel
 
   protected function __construct($instance)
   {
+    # Get all defined in model table fields 
     $reflect = new ReflectionClass($this);
     $public = $reflect->getProperties(ReflectionProperty::IS_PUBLIC);
     $static = $reflect->getProperties(ReflectionProperty::IS_STATIC);
     $props = array_diff($public, $static);
 
+    # Get fields from associated tables that was defined by user
     $assocPropsNames = array_filter(
       $instance,
       function ($key) {
-        $filterPropNames = array_keys(static::$associations);
-        foreach ($filterPropNames as $propName) {
-          if (stripos($key, $propName) !== false) return true;
+        $filterTableNames = array_keys(static::$associations);
+        foreach ($filterTableNames as $tableName) {
+          if (stripos($key, $tableName) !== false) return true; # Filter associated fields
         }
         return false;
       },
@@ -34,18 +36,24 @@ class DBModel
 
     foreach ($props as $prop) {
       $propName = $prop->getName();
-      $this->{$propName} = $instance[$propName];
+      $this->{$propName} = $instance[$propName]; # Set values to model fields
     }
     foreach ($assocPropsNames as $key => $value) {
-      $this->{$key} = $instance[$key];
+      $this->{$key} = $instance[$key]; # Set values to model associated fields
     }
   }
 
   public function __set($name, $value)
   {
-    $this->$name = $value;
+    $this->$name = $value; # Set associted fields
   }
 
+  /**
+   * Forms string for joining associated tables.
+   *
+   * @param assocValues (array)
+   * @return string
+   */
   protected static function getAssociations($assocValues)
   {
     if (count($assocValues) === 0) {
@@ -66,6 +74,12 @@ class DBModel
     return $associations;
   }
 
+  /**
+   * Forms string with values which should be selected.
+   *
+   * @param assocValues (array)
+   * @return string
+   */
   protected static function getSelectValues($assocValues)
   {
     $tableName = static::$table_name;
@@ -79,10 +93,10 @@ class DBModel
     $selectingValuesArray = array($defaultSelectValue);
 
     foreach ($assocTableNames as $assocTableName) {
-      $valuesArray = array();
+      $valuesArray = array(); # Array for spicific associated table
       foreach ($assocValues[$assocTableName] as $value) {
-        $namedValue = $assocTableName . '_' . $value;
-        array_push($valuesArray, "$assocTableName.$value AS $namedValue");
+        $namedValue = $assocTableName . '_' . $value; # Create AS name
+        array_push($valuesArray, "$assocTableName.$value AS $namedValue"); # Push associated field to selecting values array
       }
       array_push($selectingValuesArray, implode(',', $valuesArray));
     }

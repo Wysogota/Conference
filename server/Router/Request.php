@@ -21,6 +21,11 @@ class Request implements IRequest
     }
   }
 
+  /**
+   * Set _SERVER method names to correct view
+   *
+   * @param string (string)
+   */
   private function toCamelCase($string)
   {
     $result = strtolower($string);
@@ -54,15 +59,15 @@ class Request implements IRequest
 
     $param_keys = $values[0];
     array_walk($param_keys, function (&$item) {
-      $item = substr($item, 1);
+      $item = substr($item, 1); # Removes ':' char from param name
     });
 
-    $path = str_replace(implode('/', $values[0]), '', $route);
-    $param_values = array_values(array_filter(explode('/', str_replace($path, '', $this->requestUri))));
+    $path = str_replace(implode('/', $values[0]), '', $route); # Select basic route (/api/conference || /api/country)
+    $param_values = array_values(array_filter(explode('/', str_replace($path, '', $this->requestUri)))); # Select transferred param values
 
     if (count($param_keys) === count($param_values)) {
       for ($i = 0; $i < count($param_keys); $i++) {
-        $this->params[$param_keys[$i]] = $param_values[$i];
+        $this->params[$param_keys[$i]] = $param_values[$i]; # Set values to variables
       }
     }
   }

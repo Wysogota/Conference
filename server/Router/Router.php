@@ -17,6 +17,12 @@ class Router
     $this->request = $request;
   }
 
+  /**
+   * Creates methods for api routing.
+   *
+   * @param name (string)
+   * @param args (array)
+   */
   function __call($name, $args)
   {
     list($route, $method) = $args;
@@ -32,7 +38,8 @@ class Router
   }
 
   /**
-   * Removes trailing forward slashes from the right of the route.
+   * Creates correct url path by replacing params to values.
+   * 
    * @param route (string)
    */
   private function formatRoute($route)
@@ -42,6 +49,7 @@ class Router
       return '/';
     }
 
+    # Select params from url
     preg_match_all('/:[^\/]*/', $route, $values);
     $param_keys = $values[0];
     $param_values = array();
@@ -51,13 +59,13 @@ class Router
       for ($i = 0; $i < count($params); $i++) {
         $paramName = substr($param_keys[$i], 1);
         if (array_key_exists($paramName, $params)) {
-          $param_values[$i] = $params[$paramName];
+          $param_values[$i] = $params[$paramName]; #Get existing param values
         }
       }
 
       if (count($param_keys) === count($param_values)) {
         for ($i = 0; $i < count($param_keys); $i++) {
-          $result = str_replace($param_keys[$i], $param_values[$i], $result);
+          $result = str_replace($param_keys[$i], $param_values[$i], $result); #Replace params in url
         }
       }
     }

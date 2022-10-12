@@ -3,7 +3,7 @@ import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import cx from 'classnames';
 import moment from 'moment';
-import { capitalize, isFinite } from 'lodash';
+import { capitalize } from 'lodash';
 import Remove from '../Remove';
 import MapInput from './MapInput';
 import CoordInput from './CoordInput';

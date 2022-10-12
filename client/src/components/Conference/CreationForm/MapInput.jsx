@@ -7,12 +7,12 @@ const MapInput = (props) => {
   const [coord, setCoord] = useState({ lat, lng });
 
   useEffect(() => {
-    setCoord({ lat, lng });
+    setCoord({ lat, lng }); // If values was updated from input form
   }, [lat, lng]);
   
   useEffect(() => {
-    setFieldValue('lat', coord.lat);
-    setFieldValue('lng', coord.lng);
+    setFieldValue('lat', coord.lat); // If new coord value was select, update formik state
+    setFieldValue('lng', coord.lng); // ^
   }, [coord]);
 
   return <Map coord={coord} setCoord={setCoord} className='mb-3' />;

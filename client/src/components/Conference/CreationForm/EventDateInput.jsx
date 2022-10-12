@@ -15,7 +15,7 @@ const EventDateInput = (props) => {
   }, [eventDate]);
 
   useEffect(() => {
-    setFieldValue('eventDate', date);
+    setFieldValue('eventDate', date); // If new date value was select, update formik state
   }, [date]);
 
   const validateDate = (currentDate) => currentDate > moment();
