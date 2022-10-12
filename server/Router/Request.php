@@ -4,6 +4,7 @@ require_once 'IRequest.php';
 class Request implements IRequest
 {
   public $params = array();
+  public $body = array();
 
   function __construct()
   {
@@ -35,13 +36,12 @@ class Request implements IRequest
   {
     switch ($this->requestMethod) {
       case 'GET':
+      case 'DELETE':
         return;
       case 'POST':
       case 'PUT':
-      case 'DELETE':
         $data = file_get_contents('php://input');
-        $body = json_decode($data, true);
-        return $body;
+        $this->body = json_decode($data, true);
     }
   }
 
@@ -55,7 +55,7 @@ class Request implements IRequest
     });
 
     $path = str_replace(implode('/', $values[0]), '', $route);
-    $param_values = array_values(array_filter(explode('/', str_replace($path, '', $_SERVER['REQUEST_URI']))));
+    $param_values = array_values(array_filter(explode('/', str_replace($path, '', $this->requestUri))));
 
     if (count($param_keys) === count($param_values)) {
       for ($i = 0; $i < count($param_keys); $i++) {

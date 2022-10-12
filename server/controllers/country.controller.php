@@ -28,7 +28,7 @@ function getCountries($request)
 function createCountry($request)
 {
   try {
-    $body = $request->getBody();
+    $body = $request->body;
 
     $coordBody = ['lat' => $body['lat'], 'lng' => $body['lng']];
     $coord = Coord::create($coordBody, true);

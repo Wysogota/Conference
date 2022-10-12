@@ -30,8 +30,7 @@ function getConferences($request)
 function createConference($request)
 {
   try {
-    $body = $request->getBody();
-
+    $body = $request->body;
     $coordBody = ['lat' => $body['lat'], 'lng' => $body['lng']];
     $coord = Coord::create($coordBody, true);
 
@@ -65,7 +64,7 @@ function updateConference($request)
 {
   try {
     $conferenceId = $request->params['conferenceId'];
-    $body = $request->getBody();
+    $body = $request->body;
 
     $coordBody = ['lat' => $body['lat'], 'lng' => $body['lng']];
     $coord = Coord::updateById($body['coord_id'], $coordBody, true);
