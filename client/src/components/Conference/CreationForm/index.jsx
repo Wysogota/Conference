@@ -12,13 +12,17 @@ import EventDateInput from './EventDateInput';
 import styles from './CreationForm.module.scss';
 import { CONFERENCE_FORM_SCHEMA } from '../../../utils/validationSchemas';
 
-const initialValues = (conference = {}) => {
+const initialValues = (conference) => {
+  if (conference) {
+    const { name, event_date: eventDate, coords_lat: lat, coords_lng: lng, country_id: country } = conference;
+    return { name, eventDate, lat: Number(lat), lng: Number(lng), country };
+  }
   return {
-    name: conference?.name || '',
-    eventDate: conference?.event_date || moment().add(1, 'day').format('YYYY-MM-DD'),
-    lat: Number(conference?.coords_lat) || '',
-    lng: Number(conference?.coords_lng) || '',
-    country: conference?.country_id || '0',
+    name: '',
+    eventDate: moment().add(1, 'day').format('YYYY-MM-DD'),
+    lat: '',
+    lng: '',
+    country: '0',
   };
 };
 
@@ -64,9 +68,8 @@ const CreationForm = (props) => {
           setFieldValue={setFieldValue}
           groupClasses={styles.input_container}
         />
-
-        {values.country !== '0' && <>
-          <CoordInput groupClasses={styles.input_container}/>
+        {values.country !== '0' && !Number.isNaN(values.lat) && !Number.isNaN(values.lng) && <>
+          <CoordInput groupClasses={styles.input_container} />
           <MapInput lat={values.lat} lng={values.lng} setFieldValue={setFieldValue} />
         </>}
 
