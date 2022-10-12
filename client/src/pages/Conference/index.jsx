@@ -49,6 +49,7 @@ const Conference = observer(() => {
             <Remove id={conferenceId} className='ms-2' />
           </Col>
         </Row>
+        {coords_lat !== '' && coords_lng !== '' && (
         <Row>
           <Col>
             <Map
@@ -58,6 +59,7 @@ const Conference = observer(() => {
             />
           </Col>
         </Row>
+        )}
         <Row className='mt-3'>
           <Col className='text-center text-md-end'>
             <span>{coords_lat}</span>

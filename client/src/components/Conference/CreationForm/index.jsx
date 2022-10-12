@@ -3,7 +3,7 @@ import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import cx from 'classnames';
 import moment from 'moment';
-import { capitalize } from 'lodash';
+import { capitalize, isFinite } from 'lodash';
 import Remove from '../Remove';
 import MapInput from './MapInput';
 import CoordInput from './CoordInput';
@@ -14,8 +14,10 @@ import { CONFERENCE_FORM_SCHEMA } from '../../../utils/validationSchemas';
 
 const initialValues = (conference) => {
   if (conference) {
-    const { name, event_date: eventDate, coords_lat: lat, coords_lng: lng, country_id: country } = conference;
-    return { name, eventDate, lat: Number(lat), lng: Number(lng), country };
+    const { name, event_date: eventDate, coords_lat, coords_lng, country_id: country } = conference;
+    const lat = coords_lat === '' ? coords_lat : Number(coords_lat);
+    const lng = coords_lng === '' ? coords_lng : Number(coords_lng);
+    return { name, eventDate, lat, lng, country };
   }
   return {
     name: '',
